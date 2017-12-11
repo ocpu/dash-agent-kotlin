@@ -1,0 +1,61 @@
+buildscript {
+    ext.kotlin_version = '1.2.0'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+    }
+}
+
+group 'io.opencubes'
+version '1.0-alpha'
+
+apply plugin: 'kotlin'
+apply plugin: 'com.jfrog.bintray'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.apache.httpcomponents:httpclient:4.5"
+    compile 'org.apache.httpcomponents:httpmime:4.4'
+    compile 'commons-io:commons-io:2.5'
+    compile 'com.google.code.gson:gson:2.7'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayKey
+    pkg {
+        repo = "libraries"
+        name = "DashAgent"
+        configurations = ['archives']
+        licenses = ["MIT"]
+        vcsUrl = "https://github.com/ocpu/Boxlin.git"
+
+        version {
+            name = modVersion
+        }
+    }
+}
