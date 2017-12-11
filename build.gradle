@@ -1,5 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.2.0'
+    ext.libVersion = '1.0.0'
 
     repositories {
         mavenCentral()
@@ -11,7 +12,7 @@ buildscript {
 }
 
 group 'io.opencubes'
-version '1.0-alpha'
+version libVersion
 
 apply plugin: 'kotlin'
 apply plugin: 'com.jfrog.bintray'
@@ -52,10 +53,10 @@ bintray {
         name = "DashAgent"
         configurations = ['archives']
         licenses = ["MIT"]
-        vcsUrl = "https://github.com/ocpu/Boxlin.git"
+        vcsUrl = "https://github.com/ocpu/dash-agent-kotlin.git"
 
         version {
-            name = modVersion
+            name = libVersion
         }
     }
 }
